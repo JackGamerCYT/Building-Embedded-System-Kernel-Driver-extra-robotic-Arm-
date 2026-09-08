@@ -1,0 +1,39 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835", "brcm,bcm2711", "brcm,bcm2708";
+
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            robot_arm: robot_arm_step {
+                compatible = "hcmute,robot-arm-step";
+                pinctrl-names = "default";
+                
+                /* Định nghĩa các chân gpios */
+                step-gpios = <&gpio 5 0>,   /* Joint 0 - Đế */
+                             <&gpio 12 0>,  /* Joint 1 - Vai */
+                             <&gpio 16 0>,  /* Joint 2 - Khuỷu */
+                             <&gpio 26 0>;  /* Joint 3 - Kẹp */
+                             
+                dir-gpios = <&gpio 6 0>,    /* Joint 0 - Đế */
+                            <&gpio 13 0>,   /* Joint 1 - Vai */
+                            <&gpio 19 0>,   /* Joint 2 - Khuỷu */
+                            <&gpio 21 0>;   /* Joint 3 - Kẹp */
+                            
+                enable-global-gpios = <&gpio 20 0>; /* Global Enable */
+                
+                sensor-pickup-gpios = <&gpio 17 0>; /* Cảm biến máng gắp */
+                sensor-grip-gpios   = <&gpio 27 0>; /* Cảm biến kẹp */
+                sensor-place-gpios  = <&gpio 22 0>; /* Cảm biến khay đặt */
+                sensor-estop-gpios  = <&gpio 24 0>; /* Cảm biến dừng khẩn */
+                
+                led-ready-gpios     = <&gpio 23 0>; /* LED báo sẵn sàng */
+                pca-oe-gpios        = <&gpio 25 0>; /* Chân OE PCA9685 */
+                
+                status = "okay";
+            };
+        };
+    };
+};
